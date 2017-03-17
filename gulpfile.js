@@ -43,7 +43,7 @@ gulp.task("minifyScripts", ["jsBrowserify"], function() {
 
 gulp.task("build", ["clean"], function() {
   if (buildProduction) {
-    gulp.start("minifyScripts")
+    gulp.start("minifyScripts");
   } else {
     gulp.start("jsBrowserify");
   }
