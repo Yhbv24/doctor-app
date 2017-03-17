@@ -5,12 +5,18 @@ var apiKey = require("./../.env").apiKey;
 // result.data[i].profile.last_name = doctor's last name
 // result.data[i].profile.bio = doctor's bio
 
-// API Office Information:
+// API Address Information:
 // result.data[i].practices[0].name = office name
 // result.data[i].practices[0].visit_address.city = city
 // result.data[i].practices[0].visit_address.state = state
 // result.data[i].practices[0].visit_address.street = street
 // result.data[i].practices[0].visit_address.zip = zip
+
+// API Phone Information
+// result.data[i].practices[0].phones.number = phone number
+
+// API Website Information
+// result.data[i].practices[0].website = website
 
 function Doctor() {
 }
@@ -22,17 +28,20 @@ Doctor.prototype.getDoctors = function(medicalIssue, displayDoctors) {
   .then(function(result) {
     for (var i = 0; i < result.data.length; i++) {
       doctors[i] = {
-        first_name: result.data[i].profile.first_name,
-        last_name: result.data[i].profile.last_name,
+        name: result.data[i].profile.first_name +
+          " " + result.data[i].profile.last_name,
         address: result.data[i].practices[0].visit_address.street +
           ", " + result.data[i].practices[0].visit_address.city +
           ", " + result.data[i].practices[0].visit_address.state +
-          ", " + result.data[i].practices[0].visit_address.zip
-      };
-    }
+          ", " + result.data[i].practices[0].visit_address.zip,
+        phone_number: result.data[i].practices[0].phones.number,
+        website: result.data[i].practices[0].website
+      }
+    };
+    displayDoctors(medicalIssue, doctors);
+  }).fail(function(result) {
+    $(".results").text("Error in retrieving results.");
   });
-
-  return doctors;
 };
 
 exports.doctorModule = Doctor;
