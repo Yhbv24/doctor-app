@@ -1,6 +1,5 @@
 var Doctor = require("./../js/Doctor.js").doctorModule;
 var displayDoctors = function(medicalIssue, doctors) {
-  console.log(doctors);
   for (var i = 0; i < doctors.length; i++) {
     $("#results-list").append(
       "<tr>" +
@@ -8,6 +7,7 @@ var displayDoctors = function(medicalIssue, doctors) {
         "<td>" + doctors[i].address + "</td>" + // Doctor's address
         "<td>" + doctors[i].phone_number + "</td>" + // Doctor's phone number
         "<td>" + doctors[i].website + "</td>" + // Doctor's website
+        "<td>" + doctors[i].specialties + "</td>" + // Doctor's specialties
       "</tr>"
     );
   }
@@ -15,14 +15,12 @@ var displayDoctors = function(medicalIssue, doctors) {
 
 $(function() {
   var DoctorObject = new Doctor();
-
   $("#find").click(function() {
     var medicalIssue = $("#medical-issue").val();
+
     $("#medical-issue").val("");
     $("#results-list").empty();
-
-    DoctorObject.getDoctors(medicalIssue, displayDoctors);
-
     $("#results").show();
+    DoctorObject.getDoctors(medicalIssue, displayDoctors);
   });
 });
